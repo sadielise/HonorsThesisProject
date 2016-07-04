@@ -81,7 +81,7 @@ public class CombineData {
 
 		// THIS IGNORES THE FIRST 2 ROWS OF DATA
 		SimpleRegression sr = new SimpleRegression();
-		for(int row = 2; row < 8; row++){
+		for(int row = 3; row < 8; row++){
 			double tempX = (1/concentrations.get(row));
 			double tempY = (1/avgrate.get(row));
 			sr.addData(tempX, tempY);
