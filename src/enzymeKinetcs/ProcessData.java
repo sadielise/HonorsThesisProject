@@ -1,160 +1,199 @@
 package enzymeKinetcs;
 
-import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class ProcessData {
 
-	// class variables
-	protected String ConcentrationsFilename;
-	protected ArrayList<Double> Concentrations;
+	protected ArrayList<Double> BG1;
+	protected ArrayList<Double> BG2;
+	protected ArrayList<Double> BG3;
+	protected ArrayList<Double> BG4;
+	protected ArrayList<Double> Sample1;
+	protected ArrayList<Double> Sample2;
+	protected ArrayList<Double> Sample3;
+	protected ArrayList<Double> SlopeIntercept;
+	protected ArrayList<Double> BGAvg1;
+	protected ArrayList<Double> BGAvg2;
+	protected ArrayList<Double> BGAvg3;
+	protected ArrayList<Double> Norm1;
+	protected ArrayList<Double> Norm2;
+	protected ArrayList<Double> Norm3;
+	protected ArrayList<Double> ColConcs1;
+	protected ArrayList<Double> ColConcs2;
+	protected ArrayList<Double> ColConcs3;
 
-	public ProcessData(String filename){
+	public ProcessData(ArrayList<Double> BG1, ArrayList<Double> Sample1, ArrayList<Double> BG2, ArrayList<Double> Sample2, ArrayList<Double> BG3, ArrayList<Double> Sample3, ArrayList<Double> BG4, ArrayList<Double> SlopeIntercept){
 
-		ConcentrationsFilename = filename;
+		this.BG1 = BG1;
+		this.Sample1 = Sample1;
+		this.BG2 = BG2;
+		this.Sample2 = Sample2;
+		this.BG3 = BG3;
+		this.Sample3 = Sample3;
+		this.BG4 = BG4;
+		this.SlopeIntercept = SlopeIntercept;
 	}
 
-	protected void ReadConcentrations(){
+	protected void AverageData(){
 
-		Concentrations = new ArrayList<Double>();
+		// initialize arrays and variable
+		BGAvg1 = new ArrayList<Double>();
+		BGAvg2 = new ArrayList<Double>();
+		BGAvg3 = new ArrayList<Double>();
+
+		// decimal formatter
+		DecimalFormat df = new DecimalFormat("0.0000");
+
+		// find BG1 and BG2 averages
+		for(int row = 0; row < 8; row++){
+			double temp = 0;
+			temp = (BG1.get(row) + BG2.get(row))/2.0;
+			String strTemp = df.format(temp);
+			temp = Double.parseDouble(strTemp);
+			BGAvg1.add(temp);
+		}
+
+		// find BG2 and BG3 averages
+		for(int row = 0; row < 8; row++){
+			double temp = 0;
+			temp = (BG2.get(row) + BG3.get(row))/2.0;
+			String strTemp = df.format(temp);
+			temp = Double.parseDouble(strTemp);
+			BGAvg2.add(temp);
+		}
+
+		// find BG3 and BG4 averages
+		for(int row = 0; row < 8; row++){
+			double temp = 0;
+			temp = (BG3.get(row) + BG4.get(row))/2.0;
+			String strTemp = df.format(temp);
+			temp = Double.parseDouble(strTemp);
+			BGAvg3.add(temp);
+		}
+	}
+
+	protected void NormalizeData() {
+
+		// initialize arrays and variables
+		Norm1 = new ArrayList<Double>();
+		Norm2 = new ArrayList<Double>();
+		Norm3 = new ArrayList<Double>();
 		double temp = 0;
 
-		try {
-			Scanner scan = new Scanner(new File(ConcentrationsFilename));
+		// decimal formatter
+		DecimalFormat df = new DecimalFormat("0.0000");
 
-			for(int row = 0; row < 8; row++){
+		// find normalized version of Sample1
+		for(int row = 0; row < 8; row++){
+			temp = (Sample1.get(row) - BGAvg1.get(row));
+			String strTemp = df.format(temp);
+			temp = Double.parseDouble(strTemp);
+			Norm1.add(temp);
+		}
 
-				// get all doubles
-				if(scan.hasNextDouble()){
-					temp = scan.nextDouble();
-				}
+		// find normalized version of Sample2
+		for(int row = 0; row < 8; row++){
+			temp = (Sample2.get(row) - BGAvg2.get(row));
+			String strTemp = df.format(temp);
+			temp = Double.parseDouble(strTemp);
+			Norm2.add(temp);
+		}
 
-				// catch any integers
-				else if(scan.hasNextInt()){
-					temp = scan.nextInt();
-				}
+		// find normalized version of Sample3
+		for(int row = 0; row < 8; row++){
+			temp = (Sample3.get(row) - BGAvg3.get(row));
+			String strTemp = df.format(temp);
+			temp = Double.parseDouble(strTemp);
+			Norm3.add(temp);
+		}
+	}
 
-				// handle too few values
-				else {
-					System.err.println("ERROR: Not enough values in the data");
-					System.exit(-1);
-				}
+	protected void FindConcentrations() {
 
-				Concentrations.add(temp);
+		// initialize arrays and variables
+		ColConcs1 = new ArrayList<Double>();
+		ColConcs2 = new ArrayList<Double>();
+		ColConcs3 = new ArrayList<Double>();
+		double temp = 0;
 
-			}
-			scan.close();
-		} catch (Exception e) {
-			System.err.println("ERROR: File cannot be found");
+		// decimal formatter
+		DecimalFormat df = new DecimalFormat("0.000000");
+
+		// find concentration of Sample1
+		for(int row = 0; row < 8; row++){
+			temp = (Norm1.get(row) - SlopeIntercept.get(1)) / SlopeIntercept.get(0);
+			String strTemp = df.format(temp);
+			temp = Double.parseDouble(strTemp);
+			ColConcs1.add(temp);
+		}
+
+		// find concentration of Sample2
+		for(int row = 0; row < 8; row++){
+			temp = (Norm2.get(row) - SlopeIntercept.get(1)) / SlopeIntercept.get(0);
+			String strTemp = df.format(temp);
+			temp = Double.parseDouble(strTemp);
+			ColConcs2.add(temp);
+		}
+
+		// find concentration of Sample3
+		for(int row = 0; row < 8; row++){
+			temp = (Norm3.get(row) - SlopeIntercept.get(1)) / SlopeIntercept.get(0);
+			String strTemp = df.format(temp);
+			temp = Double.parseDouble(strTemp);
+			ColConcs3.add(temp);
 		}	
 	}
 
-	protected void PrintConcentrations(){
+	protected void PrintAveragedData() {
 
-		System.out.println("Concentrations");
-
-		for(int row = 0; row < 8; row ++){
-			System.out.println(Concentrations.get(row));
+		System.out.println("Averaged Data");
+		for(int row = 0; row < 8; row++){
+			for(int col = 0; col < 3; col++){
+				switch(col){
+				case 0: System.out.print(BGAvg1.get(row) + "  "); break;
+				case 1:	System.out.print(BGAvg2.get(row) + "  "); break;
+				case 2: System.out.println(BGAvg3.get(row) + "  "); break;
+				default: System.err.println("ERROR: Reached the default case. That's weird..."); break;
+				}
+			}
 		}
 
 		System.out.println();
 	}
 
-	public static void main(String[] args) {
+	protected void PrintNormalizedData() {
 
-		// variables to add times and memory
-//		long totalTime = 0;
-//		long totalMemory = 0;
-
-		// program timing
-//		for(int count = 0; count < 100; count++){
-
-//			long startTime = System.currentTimeMillis();
-
-			if(args.length != 4){
-				System.err.println("ERROR: Incorrect number of arguments.");
-				System.exit(-1);
+		System.out.println("Normalized Data");
+		for(int row = 0; row < 8; row++){
+			for(int col = 0; col < 3; col++){
+				switch(col){
+				case 0: System.out.print(Norm1.get(row) + "  "); break;
+				case 1:	System.out.print(Norm2.get(row) + "  "); break;
+				case 2: System.out.println(Norm3.get(row) + "  "); break;
+				default: System.err.println("ERROR: Reached the default case. That's weird..."); break;
+				}
 			}
+		}
 
-			ProcessData pd = new ProcessData(args[3]);
-			pd.ReadConcentrations();
-
-			System.out.println("********ANALYZING DATA********");
-			System.out.println();
-
-			System.out.println("MINUTE 1");		
-			AnalyzeData Min1 = new AnalyzeData();
-			Min1.ReadData(args[0]);
-			Min1.AverageData();
-			Min1.NormalizeData();
-			Min1.FindCalibrationEquation(pd.Concentrations);
-			Min1.FindConcentrations();
-			Min1.PrintRawData();
-			Min1.PrintAveragedData();
-			Min1.PrintNormalizedData();
-			System.out.println("Calibration Slope: " + Min1.CalibrationSlope);
-			System.out.println("Calibration Intercept: " + Min1.CalibrationIntercept);
-			System.out.println();
-			Min1.PrintConcentrationData();
-
-			System.out.println("MINUTE 2");
-			AnalyzeData Min2 = new AnalyzeData();
-			Min2.ReadData(args[1]);
-			Min2.AverageData();
-			Min2.NormalizeData();
-			Min2.FindCalibrationEquation(pd.Concentrations);
-			Min2.FindConcentrations();
-			Min2.PrintRawData();
-			Min2.PrintAveragedData();
-			Min2.PrintNormalizedData();
-			System.out.println("Calibration Slope: " + Min2.CalibrationSlope);
-			System.out.println("Calibration Intercept: " + Min2.CalibrationIntercept);
-			System.out.println();
-			Min2.PrintConcentrationData();
-
-			System.out.println("MINUTE 3");
-			AnalyzeData Min3 = new AnalyzeData();
-			Min3.ReadData(args[2]);
-			Min3.AverageData();
-			Min3.NormalizeData();
-			Min3.FindCalibrationEquation(pd.Concentrations);
-			Min3.FindConcentrations();
-			Min3.PrintRawData();
-			Min3.PrintAveragedData();
-			Min3.PrintNormalizedData();
-			System.out.println("Calibration Slope: " + Min3.CalibrationSlope);
-			System.out.println("Calibration Intercept: " + Min3.CalibrationIntercept);
-			System.out.println();
-			Min3.PrintConcentrationData();
-
-			System.out.println("********COMBINING DATA********");
-			System.out.println();
-			CombineData Combine = new CombineData();
-			ArrayList<Double> Rates1 = Combine.FindRates(Min1.ColConcs1, Min2.ColConcs1, Min3.ColConcs1);
-			ArrayList<Double> Rates2 = Combine.FindRates(Min1.ColConcs2, Min2.ColConcs2, Min3.ColConcs2);
-			ArrayList<Double> Rates3 = Combine.FindRates(Min1.ColConcs3, Min2.ColConcs3, Min3.ColConcs3);
-			Combine.PrintRates(Rates1);
-			Combine.PrintRates(Rates2);
-			Combine.PrintRates(Rates3);
-			ArrayList<Double> RatesAvg = Combine.FindRatesAvg(Rates1, Rates2, Rates3);
-			Combine.PrintAverageRates(RatesAvg);
-			ArrayList<Double> RatesStdDev = Combine.FindRatesStdDev(Rates1, Rates2, Rates3);
-			Combine.PrintStdDevRates(RatesStdDev);
-			ArrayList<Double> VmaxKm = Combine.FindVmaxKm(RatesAvg, pd.Concentrations);
-			Combine.PrintVmaxKm(VmaxKm);
-
-//			long endTime = System.currentTimeMillis();
-//			Runtime runtime = Runtime.getRuntime();
-//			runtime.gc();
-
-//			totalTime += endTime - startTime;
-//			totalMemory += runtime.totalMemory() - runtime.freeMemory();
-//			System.out.println((count+1) + ": " + (endTime - startTime) + " milliseconds");
-		
-//		}
-		
-//		System.out.println("Avg time: " + (totalTime/100) + " ms");
-//		System.out.println("Avg memory: " + (totalMemory/100) + " bytes");
+		System.out.println();
 	}
+
+	protected void PrintConcentrationData() {
+
+		System.out.println("Concentration Data");
+		for(int row = 0; row < 8; row++){
+			for(int col = 0; col < 3; col++){
+				switch(col){
+				case 0: System.out.print(ColConcs1.get(row) + "  "); break;
+				case 1: System.out.print(ColConcs2.get(row) + "  "); break;
+				case 2: System.out.println(ColConcs3.get(row) + "  "); break;
+				default: System.err.print("Error: Reached the default case. That's weird...");
+				}
+			}
+		}
+
+		System.out.println();
+	}
+
 }
