@@ -19,36 +19,67 @@ public class FindVmaxKm {
 		this.SubstrateConc = SubstrateConc;
 
 	}
-
-	protected void LineweaverBurk(){
-
+	
+	protected void LineweaverBurk(int index){
+		LB = new SimpleRegression();
+		for(int i = index; i < SubstrateConc.size()-index; i++){
+			double x = 1.0/SubstrateConc.get(i);
+			double y = 1.0/ReactionRate.get(i);
+			LB.addData(x, y);
+		}
+	}
+	
+	protected void MichaelisMenten(int index, double tempVmax, double tempKm){
 		
+		MM = new SimpleRegression();
+		for(int i = index; i < SubstrateConc.size()-index; i++){
+			Double temp = (tempVmax * SubstrateConc.get(i))/(tempKm + SubstrateConc.get(i));
+			MM.addData(SubstrateConc.get(i), temp);
+		}
 	}
 
 	protected void FindValues(){
 
 		boolean done = false;
+		double deviation = 0;
+		int index = 0;
+		double tempVmax = 0;
+		double tempKm = 0;
 
 		while(done == false){
 			
-			LB = new SimpleRegression();
-			for(int i = 0; i < SubstrateConc.size(); i++){
-				double x = 1.0/SubstrateConc.get(i);
-				double y = 1.0/ReactionRate.get(i);
-				LB.addData(x, y);
-			}
-			Vmax = 1.0/LB.getIntercept();
-			Km = LB.getSlope()/LB.getIntercept();
-
-			MM = new SimpleRegression();
-
-			for(int i = 0; i < 8; i++){
-				Double temp = (Vmax * SubstrateConc.get(i))/(Km + SubstrateConc.get(i));
-				MM.addData(SubstrateConc.get(0), temp);
-			}
+			LineweaverBurk(index);
+			Vmax = tempVmax;
+			Km = tempKm;
+			tempVmax = 1.0/LB.getIntercept();
+			tempKm = LB.getSlope()/LB.getIntercept();
+			
+			MichaelisMenten(index, tempVmax, tempKm);
 
 			double diff = Math.abs(MM.getSlope() - LB.getSlope());
 
+			// clear regressions
+			LB.clear();
+			MM.clear();
+			
+			if(index == 0){
+				deviation = diff;
+				System.out.println("Removing concentration: " + SubstrateConc.get(index));
+				System.out.println("Removing rate: " + ReactionRate.get(index));
+				index++;
+			}
+			
+			else {
+				if((diff <= deviation) && (index < 5)) {
+					deviation = diff;
+					System.out.println("Removing concentration: " + SubstrateConc.get(index));
+					System.out.println("Removing rate: " + ReactionRate.get(index));
+					index++;
+				}
+				else {
+					done = true;
+				}
+			}
 		}
 	}
 

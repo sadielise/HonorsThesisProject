@@ -116,7 +116,7 @@ public class Kinetics {
 			fs.PrintStdDevRates();
 			
 			FindVmaxKm fvk = new FindVmaxKm(fs.AvgRates, rd.SampleConcs);
-			fvk.LineweaverBurk();
+			fvk.FindValues();
 			fvk.PrintVmaxKm();
 //			ArrayList<Double> VmaxKm = Combine.FindVmaxKm(RatesAvg, pd.Concentrations);
 //			Combine.PrintVmaxKm(VmaxKm);
