@@ -79,20 +79,29 @@ public class Kinetics {
 			// process min1 data
 			ProcessData min1 = new ProcessData(rd1.BG1, rd1.Sample1, rd1.BG2, rd1.Sample2, rd1.BG3, rd1.Sample3, rd1.BG4, cb1.SlopeIntercept);
 			min1.AverageData();
+			min1.PrintAveragedData();
 			min1.NormalizeData();
+			min1.PrintNormalizedData();
 			min1.FindConcentrations();
+			min1.PrintConcentrationData();
 			
 			// process min2 data
 			ProcessData min2 = new ProcessData(rd2.BG1, rd2.Sample1, rd2.BG2, rd2.Sample2, rd2.BG3, rd2.Sample3, rd2.BG4, cb2.SlopeIntercept);
 			min2.AverageData();
+			min2.PrintAveragedData();
 			min2.NormalizeData();
+			min2.PrintNormalizedData();
 			min2.FindConcentrations();
+			min2.PrintConcentrationData();
 
 			// process min3 data
 			ProcessData min3 = new ProcessData(rd3.BG1, rd3.Sample1, rd3.BG2, rd3.Sample2, rd3.BG3, rd3.Sample3, rd3.BG4, cb3.SlopeIntercept);
 			min3.AverageData();
+			min3.PrintAveragedData();
 			min3.NormalizeData();
+			min3.PrintNormalizedData();
 			min3.FindConcentrations();
+			min3.PrintConcentrationData();
 			
 
 			System.out.println("********COMBINING DATA********");
@@ -105,6 +114,10 @@ public class Kinetics {
 			fs.PrintAverageRates();
 			fs.FindRatesStdDev();
 			fs.PrintStdDevRates();
+			
+			FindVmaxKm fvk = new FindVmaxKm(fs.AvgRates, rd.SampleConcs);
+			fvk.LineweaverBurk();
+			fvk.PrintVmaxKm();
 //			ArrayList<Double> VmaxKm = Combine.FindVmaxKm(RatesAvg, pd.Concentrations);
 //			Combine.PrintVmaxKm(VmaxKm);
 
@@ -121,3 +134,4 @@ public class Kinetics {
 //		System.out.println("Avg memory: " + (totalMemory/100) + " bytes");
 	}
 }
+

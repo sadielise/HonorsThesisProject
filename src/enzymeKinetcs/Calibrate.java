@@ -67,35 +67,30 @@ public class Calibrate {
 		// decimal format
 		DecimalFormat dfSlope = new DecimalFormat("0.0");
 		DecimalFormat dfIntercept = new DecimalFormat("0.0000");
-		
+
 
 		SimpleRegression sr = new SimpleRegression();
-		
+
 		for(int row = 0; row < 8; row++){
 			sr.addData(CalibrationConcs.get(row), Norm4.get(row));
 		}
-		
+
 		double slope = sr.getSlope();
 		String strTemp1 = dfSlope.format(slope);
 		slope = Double.parseDouble(strTemp1);
 		SlopeIntercept.add(slope);
-		
+
 		double intercept = sr.getIntercept();
 		String strTemp2 = dfIntercept.format(intercept);
 		intercept = Double.parseDouble(strTemp2);
 		SlopeIntercept.add(intercept);
 	}
-	
+
 	protected void PrintAveragedData() {
 
 		System.out.println("Calibration Averaged Data");
 		for(int row = 0; row < 8; row++){
-			for(int col = 0; col < 3; col++){
-				switch(col){
-				case 0: System.out.print(BGAvg4.get(row) + "  "); break;
-				default: System.err.println("ERROR: Reached the default case. That's weird..."); break;
-				}
-			}
+			System.out.println(BGAvg4.get(row));
 		}
 		System.out.println();
 	}
@@ -104,20 +99,16 @@ public class Calibrate {
 
 		System.out.println("Calibration Normalized Data");
 		for(int row = 0; row < 8; row++){
-			for(int col = 0; col < 3; col++){
-				switch(col){
-				case 0: System.out.print(Norm4.get(row) + "  "); break;
-				default: System.err.println("ERROR: Reached the default case. That's weird..."); break;
-				}
-			}
+			System.out.println(Norm4.get(row));
 		}
 		System.out.println();
 	}
-	
+
 	protected void PrintSlopeIntercept() {
-		
+
 		System.out.println("Calibration Slope: " + SlopeIntercept.get(0));
 		System.out.println("Calibration Intercept: " + SlopeIntercept.get(1));
+		System.out.println();
 	}
 
 }
