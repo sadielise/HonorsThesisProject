@@ -4,10 +4,6 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
-import org.opencv.core.Core;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.highgui.Highgui;
 
 public class ReadData {
 
@@ -23,11 +19,6 @@ public class ReadData {
 	protected ArrayList<Double> SampleConcs;
 	protected ArrayList<Double> CalibrationConcs;
 	
-	protected void ReadImage(String filename){
-		
-		Mat image = Highgui.imread(filename);	
-	}
-
 	protected void ReadFile(String filename){
 
 		// initialize arrays and variables

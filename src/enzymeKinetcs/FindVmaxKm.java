@@ -13,7 +13,7 @@ public class FindVmaxKm {
 	double Vmax;
 	double Km;
 
-	public FindVmaxKm(ArrayList<Double> ReactionRate, ArrayList<Double> SubstrateConc){
+	protected FindVmaxKm(ArrayList<Double> ReactionRate, ArrayList<Double> SubstrateConc){
 
 		this.ReactionRate = ReactionRate;
 		this.SubstrateConc = SubstrateConc;
@@ -56,7 +56,8 @@ public class FindVmaxKm {
 			
 			MichaelisMenten(index, tempVmax, tempKm);
 
-			double diff = Math.abs(MM.getSlope() - LB.getSlope());
+			double diff = Math.abs(MM.getIntercept() - LB.getIntercept());
+			
 
 			// clear regressions
 			LB.clear();
@@ -66,14 +67,16 @@ public class FindVmaxKm {
 				deviation = diff;
 				System.out.println("Removing concentration: " + SubstrateConc.get(index));
 				System.out.println("Removing rate: " + ReactionRate.get(index));
+				System.out.println();
 				index++;
 			}
 			
 			else {
-				if((diff <= deviation) && (index < 5)) {
+				if(((diff <= deviation) && (index < 5)) || (Km < 0 || Vmax < 0)) {
 					deviation = diff;
 					System.out.println("Removing concentration: " + SubstrateConc.get(index));
 					System.out.println("Removing rate: " + ReactionRate.get(index));
+					System.out.println();
 					index++;
 				}
 				else {
