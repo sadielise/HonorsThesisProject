@@ -22,33 +22,35 @@ public class Kinetics {
 			System.out.println();
 			
 			// read concentrations
-			ReadData rd = new ReadData();
+			ReadConcentrationData rd = new ReadConcentrationData();
 			rd.ReadSampleConcs(args[0]);
 			rd.PrintSampleConcs();
 			rd.ReadCalibrationConcs(args[1]);
 			rd.PrintCalibrationConcs();
 			
 			// read min1 data
-			ReadData rd1 = new ReadData();
-			rd1.ReadFile(args[2]);
-			rd1.PrintRawData();
+			ProcessPicture process1 = new ProcessPicture("min1.jpg");
+			process1.ReadImage();
+			process1.ExtractPixels();
+			process1.PrintRawData();
 			
 			// read min2 data
-			ReadData rd2 = new ReadData();
-			rd2.ReadFile(args[3]);
-			rd2.PrintRawData();
+			ProcessPicture process2 = new ProcessPicture("min2.jpg");
+			process2.ReadImage();
+			process2.ExtractPixels();
+			process2.PrintRawData();
 			
 			// read min3 data
-			ReadData rd3 = new ReadData();
-			rd3.ReadFile(args[4]);
-			rd3.PrintRawData();
-			
+			ProcessPicture process3 = new ProcessPicture("min3.jpg");
+			process3.ReadImage();
+			process3.ExtractPixels();
+			process3.PrintRawData();
 			
 			System.out.println("********GETTING CALIBRATION DATA********");
 			System.out.println();
 			
 			// find min1 calibration equation
-			Calibrate cb1 = new Calibrate(rd1.BG4, rd1.BG5, rd1.Calibration, rd.CalibrationConcs);
+			Calibrate cb1 = new Calibrate(process1.BG4, process1.BG5, process1.Calibration, rd.CalibrationConcs);
 			cb1.AverageData();
 			cb1.PrintAveragedData();
 			cb1.NormalizeData();
@@ -57,7 +59,7 @@ public class Kinetics {
 			cb1.PrintSlopeIntercept();
 			
 			// find min2 calibration equation
-			Calibrate cb2 = new Calibrate(rd2.BG4, rd2.BG5, rd2.Calibration, rd.CalibrationConcs);
+			Calibrate cb2 = new Calibrate(process2.BG4, process2.BG5, process2.Calibration, rd.CalibrationConcs);
 			cb2.AverageData();
 			cb2.PrintAveragedData();
 			cb2.NormalizeData();
@@ -66,7 +68,7 @@ public class Kinetics {
 			cb2.PrintSlopeIntercept();
 			
 			// find min3 calibration equation
-			Calibrate cb3 = new Calibrate(rd3.BG4, rd3.BG5, rd3.Calibration, rd.CalibrationConcs);
+			Calibrate cb3 = new Calibrate(process3.BG4, process3.BG5, process3.Calibration, rd.CalibrationConcs);
 			cb3.AverageData();
 			cb3.PrintAveragedData();
 			cb3.NormalizeData();
@@ -79,7 +81,7 @@ public class Kinetics {
 			System.out.println();
 
 			// process min1 data
-			ProcessData min1 = new ProcessData(rd1.BG1, rd1.Sample1, rd1.BG2, rd1.Sample2, rd1.BG3, rd1.Sample3, rd1.BG4, cb1.SlopeIntercept);
+			ProcessData min1 = new ProcessData(process1.BG1, process1.Sample1, rd1.BG2, rd1.Sample2, rd1.BG3, rd1.Sample3, rd1.BG4, cb1.SlopeIntercept);
 			min1.AverageData();
 			min1.PrintAveragedData();
 			min1.NormalizeData();
