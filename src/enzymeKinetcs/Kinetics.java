@@ -3,6 +3,8 @@ package enzymeKinetcs;
 public class Kinetics {
 
 	public static void main(String[] args) {
+		
+		// THIS IS A COMMENT!!!!!!!!!!!
 
 		// variables to add times and memory
 //		long totalTime = 0;
