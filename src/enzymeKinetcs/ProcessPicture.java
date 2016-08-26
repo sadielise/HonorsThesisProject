@@ -43,9 +43,7 @@ public class ProcessPicture {
 		}
 		
 		width = image.getWidth();
-		System.out.println("width: " + width);
 		height = image.getHeight();
-		System.out.println("height: " + height);
 		pixels = new double[height][width];
 		reds = new double[height][width];
 		greens = new double[height][width];
@@ -102,13 +100,9 @@ public class ProcessPicture {
 					case 8: BG5.add(value); break;
 					default: System.err.println("ERROR: Reached the default case. That's weird..."); break;
 				}
-				
 				startX += 180; //increment X
-		
 			}
-			
 			startY += 155; //increment Y
-			
 		}
 	}
 	
