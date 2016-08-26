@@ -4,8 +4,6 @@ public class Kinetics {
 
 	public static void main(String[] args) {
 		
-		// THIS IS A COMMENT!!!!!!!!!!!
-
 		// variables to add times and memory
 //		long totalTime = 0;
 //		long totalMemory = 0;
@@ -81,7 +79,7 @@ public class Kinetics {
 			System.out.println();
 
 			// process min1 data
-			ProcessData min1 = new ProcessData(process1.BG1, process1.Sample1, rd1.BG2, rd1.Sample2, rd1.BG3, rd1.Sample3, rd1.BG4, cb1.SlopeIntercept);
+			ProcessData min1 = new ProcessData(process1.BG1, process1.Sample1, process1.BG2, process1.Sample2, process1.BG3, process1.Sample3, process1.BG4, cb1.SlopeIntercept);
 			min1.AverageData();
 			min1.PrintAveragedData();
 			min1.NormalizeData();
@@ -90,7 +88,7 @@ public class Kinetics {
 			min1.PrintConcentrationData();
 			
 			// process min2 data
-			ProcessData min2 = new ProcessData(rd2.BG1, rd2.Sample1, rd2.BG2, rd2.Sample2, rd2.BG3, rd2.Sample3, rd2.BG4, cb2.SlopeIntercept);
+			ProcessData min2 = new ProcessData(process2.BG1, process2.Sample1, process2.BG2, process2.Sample2, process2.BG3, process2.Sample3, process2.BG4, cb2.SlopeIntercept);
 			min2.AverageData();
 			min2.PrintAveragedData();
 			min2.NormalizeData();
@@ -99,7 +97,7 @@ public class Kinetics {
 			min2.PrintConcentrationData();
 
 			// process min3 data
-			ProcessData min3 = new ProcessData(rd3.BG1, rd3.Sample1, rd3.BG2, rd3.Sample2, rd3.BG3, rd3.Sample3, rd3.BG4, cb3.SlopeIntercept);
+			ProcessData min3 = new ProcessData(process3.BG1, process3.Sample1, process3.BG2, process3.Sample2, process3.BG3, process3.Sample3, process3.BG4, cb3.SlopeIntercept);
 			min3.AverageData();
 			min3.PrintAveragedData();
 			min3.NormalizeData();
