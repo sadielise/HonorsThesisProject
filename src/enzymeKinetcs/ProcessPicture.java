@@ -44,6 +44,8 @@ public class ProcessPicture {
 		
 		width = image.getWidth();
 		height = image.getHeight();
+		System.out.println("width: " + width);
+		System.out.println("height: " + height);
 		pixels = new double[height][width];
 		reds = new double[height][width];
 		greens = new double[height][width];
@@ -80,11 +82,11 @@ public class ProcessPicture {
 		int startX = 220;
 		int startY = 424;
 		
-		for(int row = 0; row < 9; row++){
+		for(int row = 0; row < 8; row++){
 			
 			startX = 220; //reset X
 			
-			for(int col = 0; col < 8; col++){
+			for(int col = 0; col < 9; col++){
 				
 				double value = greens[startY][startX];
 				
