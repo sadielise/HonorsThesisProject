@@ -10,12 +10,6 @@ import javax.imageio.ImageIO;
 public class ProcessPicture {
 	
 	BufferedImage image = null;	
-	double[][] pixels;
-	double[][] reds;
-	double[][] greens;
-	double[][] blues;
-	int width = 0;
-	int height = 0;
 	String filename;
 	protected ArrayList<Double> BG1;
 	protected ArrayList<Double> BG2;
@@ -32,43 +26,23 @@ public class ProcessPicture {
 		this.filename = filename;
 	}
 	
-	public void ReadImage(){
+	public void TakePictures() throws InterruptedException{
 		
-		System.out.println("Reading image: " + filename);
+		try {
+			Runtime.getRuntime().exec("python /home/pi/take_pictures.py");
+			Thread.sleep(210000);
+		} catch (IOException e) {
+			System.err.println("ERROR: Could not take pictures.");
+		}
+	}
+	
+	public void ExtractPixels(){
 		
 		try {
 			image = ImageIO.read(new File(filename));
 		} catch (IOException e){
 			System.err.println("ERROR: Cannot read file.");
 		}
-		
-		width = image.getWidth();
-		height = image.getHeight();
-		System.out.println("width: " + width);
-		System.out.println("height: " + height);
-		pixels = new double[height][width];
-		reds = new double[height][width];
-		greens = new double[height][width];
-		blues = new double[height][width];
-		
-		for(int i = 0; i < height; i++){
-			for(int j = 0; j < width; j++){
-				int pixel = image.getRGB(j, i);
-				pixels[i][j] = pixel;
-								
-				int red = (pixel >> 16) & 255;
-				reds[i][j] = red;
-				
-				int green = (pixel >> 8) & 255;
-				greens[i][j] = green;
-				
-				int blue = pixel & 255;
-				blues[i][j] = blue;	
-			}
-		}		
-	}
-	
-	public void ExtractPixels(){
 		
 		BG1 = new ArrayList<Double>();
 		BG2 = new ArrayList<Double>();
@@ -88,7 +62,10 @@ public class ProcessPicture {
 			
 			for(int col = 0; col < 9; col++){
 				
-				double value = greens[startY][startX];
+				System.out.print("(" + startX + "," + startY + ") ");
+				int pixel = image.getRGB(startX, startY);
+				int green = (pixel >> 8) & 255;
+				double value = Math.abs(green - 255);
 				
 				switch(col){
 					case 0: BG1.add(value); break;
@@ -104,6 +81,7 @@ public class ProcessPicture {
 				}
 				startX += 180; //increment X
 			}
+			System.out.println();
 			startY += 155; //increment Y
 		}
 	}

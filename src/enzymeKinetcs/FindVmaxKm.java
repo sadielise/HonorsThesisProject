@@ -17,7 +17,6 @@ public class FindVmaxKm {
 
 		this.ReactionRate = ReactionRate;
 		this.SubstrateConc = SubstrateConc;
-
 	}
 	
 	protected void LineweaverBurk(int index){
@@ -57,7 +56,6 @@ public class FindVmaxKm {
 			MichaelisMenten(index, tempVmax, tempKm);
 
 			double diff = Math.abs(MM.getIntercept() - LB.getIntercept());
-			
 
 			// clear regressions
 			LB.clear();
@@ -72,7 +70,7 @@ public class FindVmaxKm {
 			}
 			
 			else {
-				if(((diff <= deviation) && (index < 5)) || (Km < 0 || Vmax < 0)) {
+				if((diff <= deviation)|| (Km < 0 || Vmax < 0)) {
 					deviation = diff;
 					System.out.println("Removing concentration: " + SubstrateConc.get(index));
 					System.out.println("Removing rate: " + ReactionRate.get(index));
