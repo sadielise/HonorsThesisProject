@@ -26,16 +26,6 @@ public class ProcessPicture {
 		this.filename = filename;
 	}
 	
-	public void TakePictures() throws InterruptedException{
-		
-		try {
-			Runtime.getRuntime().exec("python /home/pi/take_pictures.py");
-			Thread.sleep(210000);
-		} catch (IOException e) {
-			System.err.println("ERROR: Could not take pictures.");
-		}
-	}
-	
 	public void ExtractPixels(){
 		
 		try {
@@ -62,7 +52,7 @@ public class ProcessPicture {
 			
 			for(int col = 0; col < 9; col++){
 				
-				System.out.print("(" + startX + "," + startY + ") ");
+				//System.out.print("(" + startX + "," + startY + ") ");
 				int pixel = image.getRGB(startX, startY);
 				int green = (pixel >> 8) & 255;
 				double value = Math.abs(green - 255);
@@ -81,7 +71,7 @@ public class ProcessPicture {
 				}
 				startX += 180; //increment X
 			}
-			System.out.println();
+			//System.out.println();
 			startY += 155; //increment Y
 		}
 	}

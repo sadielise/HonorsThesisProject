@@ -1,6 +1,18 @@
 package enzymeKinetcs;
 
+import java.io.IOException;
+
 public class Kinetics {
+	
+	public void TakePictures() throws InterruptedException{
+		
+		try {
+			Runtime.getRuntime().exec("python /home/pi/take_pictures.py");
+			Thread.sleep(210000);
+		} catch (IOException e) {
+			System.err.println("ERROR: Could not take pictures.");
+		}
+	}
 
 	public static void main(String[] args) {
 		
@@ -11,9 +23,17 @@ public class Kinetics {
 //		for(int count = 0; count < 100; count++){
 //			long startTime = System.currentTimeMillis();
 
-			if(args.length != 5){
+			if(args.length != 2){
 				System.err.println("ERROR: Incorrect number of arguments.");
 				System.exit(-1);
+			}
+			
+			Kinetics k = new Kinetics();
+			try {
+				k.TakePictures();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			
 			System.out.println("********READING DATA********");
@@ -27,17 +47,18 @@ public class Kinetics {
 			rd.PrintCalibrationConcs();
 			
 			// read min1 data
-			ProcessPicture process1 = new ProcessPicture("IMG_3144.JPG");
+			ProcessPicture process1 = new ProcessPicture("/home/pi/raw1.jpg");
+			
 			process1.ExtractPixels();
 			process1.PrintRawData();
 			
 			// read min2 data
-			ProcessPicture process2 = new ProcessPicture("IMG_3145.JPG");
+			ProcessPicture process2 = new ProcessPicture("/home/pi/raw2.jpg");
 			process2.ExtractPixels();
 			process2.PrintRawData();
 			
 			// read min3 data
-			ProcessPicture process3 = new ProcessPicture("IMG_3146.JPG");
+			ProcessPicture process3 = new ProcessPicture("/home/pi/raw3.jpg");
 			process3.ExtractPixels();
 			process3.PrintRawData();
 			
