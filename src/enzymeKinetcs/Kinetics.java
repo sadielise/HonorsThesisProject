@@ -27,17 +27,17 @@ public class Kinetics {
 			rd.PrintCalibrationConcs();
 			
 			// read min1 data
-			ProcessPicture process1 = new ProcessPicture("IMG_3144.JPG");
+			ProcessPicture process1 = new ProcessPicture(args[2]);
 			process1.ExtractPixels();
 			process1.PrintRawData();
 			
 			// read min2 data
-			ProcessPicture process2 = new ProcessPicture("IMG_3145.JPG");
+			ProcessPicture process2 = new ProcessPicture(args[3]);
 			process2.ExtractPixels();
 			process2.PrintRawData();
 			
 			// read min3 data
-			ProcessPicture process3 = new ProcessPicture("IMG_3146.JPG");
+			ProcessPicture process3 = new ProcessPicture(args[4]);
 			process3.ExtractPixels();
 			process3.PrintRawData();
 			
