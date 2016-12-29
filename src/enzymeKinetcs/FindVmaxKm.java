@@ -55,7 +55,8 @@ public class FindVmaxKm {
 			
 			MichaelisMenten(index, tempVmax, tempKm);
 
-			double diff = Math.abs(MM.getIntercept() - LB.getIntercept());
+			// find difference between LB and MM slopes
+			double diff = Math.abs(MM.getSlope() - LB.getSlope());
 
 			// clear regressions
 			LB.clear();
@@ -70,7 +71,7 @@ public class FindVmaxKm {
 			}
 			
 			else {
-				if((diff <= deviation)|| (Km < 0 || Vmax < 0)) {
+				if(diff < deviation) {
 					deviation = diff;
 					System.out.println("Removing concentration: " + SubstrateConc.get(index));
 					System.out.println("Removing rate: " + ReactionRate.get(index));

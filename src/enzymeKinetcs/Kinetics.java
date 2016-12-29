@@ -71,7 +71,6 @@ public class Kinetics {
 			cb3.FindSlopeIntercept();
 			cb3.PrintSlopeIntercept();
 			
-			
 			System.out.println("********PROCESSING DATA********");
 			System.out.println();
 
@@ -101,7 +100,6 @@ public class Kinetics {
 			min3.PrintNormalizedData();
 			min3.FindConcentrations();
 			min3.PrintConcentrationData();
-			
 
 			System.out.println("********COMBINING DATA********");
 			System.out.println();
