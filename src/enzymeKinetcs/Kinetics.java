@@ -115,8 +115,6 @@ public class Kinetics {
 			FindVmaxKm fvk = new FindVmaxKm(fs.AvgRates, rd.SampleConcs);
 			fvk.FindValues();
 			fvk.PrintVmaxKm();
-//			ArrayList<Double> VmaxKm = Combine.FindVmaxKm(RatesAvg, pd.Concentrations);
-//			Combine.PrintVmaxKm(VmaxKm);
 
 //			long endTime = System.currentTimeMillis();
 //			Runtime runtime = Runtime.getRuntime();
