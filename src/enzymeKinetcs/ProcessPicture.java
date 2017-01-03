@@ -1,4 +1,4 @@
-package enzymeKinetcs;
+package src.enzymeKinetcs;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

@@ -1,7 +1,6 @@
-package enzymeKinetcs;
+package src.enzymeKinetcs;
 
 import java.io.File;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 

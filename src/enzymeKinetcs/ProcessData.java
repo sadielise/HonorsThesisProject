@@ -1,4 +1,4 @@
-package enzymeKinetcs;
+package src.enzymeKinetcs;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

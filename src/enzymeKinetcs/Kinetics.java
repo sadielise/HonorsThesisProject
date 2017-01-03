@@ -1,8 +1,7 @@
-package enzymeKinetcs;
+package src.enzymeKinetcs;
 
 import java.io.IOException;
 
-import enzymeKinetcs.ProcessPicture;
 
 public class Kinetics {
 	
@@ -10,7 +9,7 @@ public class Kinetics {
 		
 		try {
 			Runtime.getRuntime().exec("python /home/pi/take_pictures.py");
-			Thread.sleep(210000);
+			Thread.sleep(21000);
 		} catch (IOException e) {
 			System.err.println("ERROR: Could not take pictures.");
 		}
@@ -25,7 +24,7 @@ public class Kinetics {
 //		for(int count = 0; count < 100; count++){
 //			long startTime = System.currentTimeMillis();
 
-			if(args.length != 2){
+			if(args.length != 5){
 				System.err.println("ERROR: Incorrect number of arguments.");
 				System.exit(-1);
 			}
