@@ -2,6 +2,8 @@ package enzymeKinetcs;
 
 import java.io.IOException;
 
+import enzymeKinetcs.ProcessPicture;
+
 public class Kinetics {
 	
 	public void TakePictures() throws InterruptedException{
