@@ -47,18 +47,30 @@ public class Kinetics {
 			rd.PrintCalibrationConcs();
 			
 			// read min1 data
+<<<<<<< HEAD
 			ProcessPicture process1 = new ProcessPicture("/home/pi/raw1.jpg");
 			
+=======
+			ProcessPicture process1 = new ProcessPicture(args[2]);
+>>>>>>> cdffd08c528cdde5e5c4b2ae583790a8d9bf0cc4
 			process1.ExtractPixels();
 			process1.PrintRawData();
 			
 			// read min2 data
+<<<<<<< HEAD
 			ProcessPicture process2 = new ProcessPicture("/home/pi/raw2.jpg");
+=======
+			ProcessPicture process2 = new ProcessPicture(args[3]);
+>>>>>>> cdffd08c528cdde5e5c4b2ae583790a8d9bf0cc4
 			process2.ExtractPixels();
 			process2.PrintRawData();
 			
 			// read min3 data
+<<<<<<< HEAD
 			ProcessPicture process3 = new ProcessPicture("/home/pi/raw3.jpg");
+=======
+			ProcessPicture process3 = new ProcessPicture(args[4]);
+>>>>>>> cdffd08c528cdde5e5c4b2ae583790a8d9bf0cc4
 			process3.ExtractPixels();
 			process3.PrintRawData();
 			
@@ -92,7 +104,6 @@ public class Kinetics {
 			cb3.FindSlopeIntercept();
 			cb3.PrintSlopeIntercept();
 			
-			
 			System.out.println("********PROCESSING DATA********");
 			System.out.println();
 
@@ -122,7 +133,6 @@ public class Kinetics {
 			min3.PrintNormalizedData();
 			min3.FindConcentrations();
 			min3.PrintConcentrationData();
-			
 
 			System.out.println("********COMBINING DATA********");
 			System.out.println();
@@ -138,8 +148,6 @@ public class Kinetics {
 			FindVmaxKm fvk = new FindVmaxKm(fs.AvgRates, rd.SampleConcs);
 			fvk.FindValues();
 			fvk.PrintVmaxKm();
-//			ArrayList<Double> VmaxKm = Combine.FindVmaxKm(RatesAvg, pd.Concentrations);
-//			Combine.PrintVmaxKm(VmaxKm);
 
 //			long endTime = System.currentTimeMillis();
 //			Runtime runtime = Runtime.getRuntime();
