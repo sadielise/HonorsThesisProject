@@ -6,12 +6,20 @@ import org.apache.commons.math3.stat.regression.SimpleRegression;
 
 public class FindVmaxKm {
 
-	ArrayList<Double> ReactionRate;
-	ArrayList<Double> SubstrateConc;
-	SimpleRegression LB;
-	SimpleRegression MM;
-	double Vmax;
-	double Km;
+	private ArrayList<Double> ReactionRate;
+	private ArrayList<Double> SubstrateConc;
+	private SimpleRegression LB;
+	private SimpleRegression MM;
+	private double Vmax;
+	private double Km;
+	
+	protected double getVmax(){
+		return Vmax;
+	}
+	
+	protected double getKm(){
+		return Km;
+	}
 
 	protected FindVmaxKm(ArrayList<Double> ReactionRate, ArrayList<Double> SubstrateConc){
 

@@ -2,14 +2,15 @@ package src.enzymeKinetcs;
 
 import java.io.IOException;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 
 public class Kinetics {
 
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql://129.82.44.126:3306/EMP";
-	
-	static final String USER = "sadiet";
-	static final String PASS = "830076836";
+	static final String DB_URL = "jdbc:mysql://localhost/kinetics";
+
+	static final String USER = "root";
+	static final String PASS = "Pr3point!";
 
 	public void TakePictures() throws InterruptedException{
 
@@ -23,13 +24,15 @@ public class Kinetics {
 
 	public static void main(String[] args) {
 
+		/*
 		// variables to add times and memory
 		long totalTime = 0;
 		long totalMemory = 0;
 		// program timing
 		//		for(int count = 0; count < 10; count++){
 		long startTime = System.currentTimeMillis();
-
+		*/
+		
 		if(args.length != 5){
 			System.err.println("ERROR: Incorrect number of arguments.");
 			System.exit(-1);
@@ -143,40 +146,48 @@ public class Kinetics {
 		fvk.FindValues();
 		fvk.PrintVmaxKm();
 
-		long endTime = System.currentTimeMillis();
+		/*long endTime = System.currentTimeMillis();
 		Runtime runtime = Runtime.getRuntime();
 		runtime.gc();
 		totalTime += endTime - startTime;
 		totalMemory += runtime.totalMemory() - runtime.freeMemory();
-		//		System.out.println((count+1) + ": " + (endTime - startTime) + " milliseconds");
+				System.out.println((count+1) + ": " + (endTime - startTime) + " milliseconds");
 
-		//		}
+				}
 
 		System.out.println("Avg time: " + (totalTime/100) + " ms");
 		System.out.println("Avg memory: " + (totalMemory/100) + " bytes");
-
+		*/
+		
 		try {
 			Class.forName(JDBC_DRIVER);
-			System.out.println("Driver registered.");
+			//System.out.println("Driver registered.");
 		} catch (ClassNotFoundException e) {
 			System.out.println("Error: MySQL Driver not found.");
 			System.exit(-1);
 		}
-		
+
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 			System.out.println("Connected to MySQL database.");
+			Statement stmt = conn.createStatement();
+			String timestamp = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss").format(new java.util.Date());
+			String insert = "INSERT INTO results VALUES (" + fvk.getVmax() + ", " + fvk.getKm() + ", '" + timestamp + "')";
+			stmt.executeUpdate(insert);
+			System.out.println("Values and timestamp inserted into database.");
 		} catch (SQLException e){
 			System.out.println("Error: Could not connect to MySQL database.");
 			System.exit(-1);
 		}
-		
+
 		if(conn != null){
-			System.out.println("Connection established!");
+			//System.out.println("Connection established!");
 		} else {
 			System.out.println("Error: Connection failed.");
 		}
+	
+		System.out.println("\nProgram complete.");
 	}
 }
 
