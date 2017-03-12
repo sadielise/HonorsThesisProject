@@ -1,4 +1,4 @@
-package enzymeKinetcs;
+package src.enzymeKinetcs;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -82,14 +82,14 @@ public class ProcessPicture {
 		System.out.println("Raw Data");
 
 		for(int row = 0; row < 8; row++){
-				System.out.print(BG1.get(row) + "  ");
-				System.out.print(Sample1.get(row) + "  ");
-				System.out.print(BG2.get(row) + "  "); 
-				System.out.print(Sample2.get(row) + "  "); 
-				System.out.print(BG3.get(row) + "  "); 
-				System.out.print(Sample3.get(row) + "  "); 
-				System.out.print(BG4.get(row) + "  "); 
-				System.out.print(Calibration.get(row) + "  "); 
+				System.out.print(BG1.get(row) + "\t");
+				System.out.print(Sample1.get(row) + "\t");
+				System.out.print(BG2.get(row) + "\t"); 
+				System.out.print(Sample2.get(row) + "\t"); 
+				System.out.print(BG3.get(row) + "\t"); 
+				System.out.print(Sample3.get(row) + "\t"); 
+				System.out.print(BG4.get(row) + "\t"); 
+				System.out.print(Calibration.get(row) + "\t"); 
 				System.out.println(BG5.get(row));
 		}
 

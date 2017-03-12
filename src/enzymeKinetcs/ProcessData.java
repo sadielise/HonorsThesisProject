@@ -1,4 +1,4 @@
-package enzymeKinetcs;
+package src.enzymeKinetcs;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -151,9 +151,9 @@ public class ProcessData {
 		for(int row = 0; row < 8; row++){
 			for(int col = 0; col < 3; col++){
 				switch(col){
-				case 0: System.out.print(BGAvg1.get(row) + "  "); break;
-				case 1:	System.out.print(BGAvg2.get(row) + "  "); break;
-				case 2: System.out.println(BGAvg3.get(row) + "  "); break;
+				case 0: System.out.print(BGAvg1.get(row) + "\t"); break;
+				case 1:	System.out.print(BGAvg2.get(row) + "\t"); break;
+				case 2: System.out.println(BGAvg3.get(row) + "\t"); break;
 				default: System.err.println("ERROR: Reached the default case. That's weird..."); break;
 				}
 			}
@@ -168,9 +168,9 @@ public class ProcessData {
 		for(int row = 0; row < 8; row++){
 			for(int col = 0; col < 3; col++){
 				switch(col){
-				case 0: System.out.print(Norm1.get(row) + "  "); break;
-				case 1:	System.out.print(Norm2.get(row) + "  "); break;
-				case 2: System.out.println(Norm3.get(row) + "  "); break;
+				case 0: System.out.print(Norm1.get(row) + "\t"); break;
+				case 1:	System.out.print(Norm2.get(row) + "\t"); break;
+				case 2: System.out.println(Norm3.get(row) + "\t"); break;
 				default: System.err.println("ERROR: Reached the default case. That's weird..."); break;
 				}
 			}
@@ -185,9 +185,9 @@ public class ProcessData {
 		for(int row = 0; row < 8; row++){
 			for(int col = 0; col < 3; col++){
 				switch(col){
-				case 0: System.out.print(ColConcs1.get(row) + "  "); break;
-				case 1: System.out.print(ColConcs2.get(row) + "  "); break;
-				case 2: System.out.println(ColConcs3.get(row) + "  "); break;
+				case 0: System.out.printf("%.6f", ColConcs1.get(row)); System.out.print("\t"); break;
+				case 1: System.out.printf("%.6f", ColConcs2.get(row)); System.out.print("\t"); break;
+				case 2: System.out.printf("%.6f", ColConcs3.get(row)); System.out.println(); break;
 				default: System.err.print("Error: Reached the default case. That's weird...");
 				}
 			}

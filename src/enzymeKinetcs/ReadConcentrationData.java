@@ -1,4 +1,4 @@
-package enzymeKinetcs;
+package src.enzymeKinetcs;
 
 import java.io.File;
 import java.util.ArrayList;
