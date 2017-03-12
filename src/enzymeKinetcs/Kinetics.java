@@ -1,5 +1,7 @@
 package enzymeKinetcs;
 
+import java.io.IOException;
+
 public class Kinetics {
 
 	public static void main(String[] args) {
@@ -11,9 +13,26 @@ public class Kinetics {
 //		for(int count = 0; count < 100; count++){
 //			long startTime = System.currentTimeMillis();
 
-			if(args.length != 5){
+			if(args.length != 0){
 				System.err.println("ERROR: Incorrect number of arguments.");
 				System.exit(-1);
+			}
+
+			System.out.println("********TAKING PICTURES********");
+			System.out.println();
+			
+			TakePictures tp = new TakePictures();
+			/*try {
+				tp.takePictures();
+			} catch (InterruptedException e1) {
+				System.err.println("ERROR: Could not take pictures.");
+			}*/
+			
+			try {
+				tp.readPixelValues();
+				tp.printPixels();
+			} catch (IOException e) {
+				System.err.println("ERROR: Could not read pixel values.");
 			}
 			
 			System.out.println("********READING DATA********");
@@ -21,24 +40,24 @@ public class Kinetics {
 			
 			// read concentrations
 			ReadConcentrationData rd = new ReadConcentrationData();
-			rd.ReadSampleConcs(args[0]);
+			rd.ReadSampleConcs("substrates.txt");
 			rd.PrintSampleConcs();
-			rd.ReadCalibrationConcs(args[1]);
+			rd.ReadCalibrationConcs("calibconcs.txt");
 			rd.PrintCalibrationConcs();
 			
 			// read min1 data
-			ProcessPicture process1 = new ProcessPicture(args[2]);
-			process1.ExtractPixels();
+			ProcessPicture process1 = new ProcessPicture("/home/pi/image1.jpg");
+			process1.ExtractPixels(tp.getPixels());
 			process1.PrintRawData();
 			
 			// read min2 data
-			ProcessPicture process2 = new ProcessPicture(args[3]);
-			process2.ExtractPixels();
+			ProcessPicture process2 = new ProcessPicture("/home/pi/image2.jpg");
+			process2.ExtractPixels(tp.getPixels());
 			process2.PrintRawData();
 			
 			// read min3 data
-			ProcessPicture process3 = new ProcessPicture(args[4]);
-			process3.ExtractPixels();
+			ProcessPicture process3 = new ProcessPicture("/home/pi/image3.jpg");
+			process3.ExtractPixels(tp.getPixels());
 			process3.PrintRawData();
 			
 			System.out.println("********GETTING CALIBRATION DATA********");
@@ -122,7 +141,7 @@ public class Kinetics {
 //			totalTime += endTime - startTime;
 //			totalMemory += runtime.totalMemory() - runtime.freeMemory();
 //			System.out.println((count+1) + ": " + (endTime - startTime) + " milliseconds");
-		
+			
 //		}
 		
 //		System.out.println("Avg time: " + (totalTime/100) + " ms");

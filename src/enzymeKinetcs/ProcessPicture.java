@@ -26,17 +26,7 @@ public class ProcessPicture {
 		this.filename = filename;
 	}
 	
-	public void TakePictures() throws InterruptedException{
-		
-		try {
-			Runtime.getRuntime().exec("python /home/pi/take_pictures.py");
-			Thread.sleep(210000);
-		} catch (IOException e) {
-			System.err.println("ERROR: Could not take pictures.");
-		}
-	}
-	
-	public void ExtractPixels(){
+	public void ExtractPixels(ArrayList<Integer[]> pixels){
 		
 		try {
 			image = ImageIO.read(new File(filename));
@@ -53,17 +43,18 @@ public class ProcessPicture {
 		Sample2 = new ArrayList<Double>();
 		Sample3 = new ArrayList<Double>();
 		Calibration = new ArrayList<Double>();
-		int startX = 220;
-		int startY = 424;
+		int pixelCounter = 0;
 		
 		for(int row = 0; row < 8; row++){
-			
-			startX = 220; //reset X
-			
+						
 			for(int col = 0; col < 9; col++){
 				
-				System.out.print("(" + startX + "," + startY + ") ");
-				int pixel = image.getRGB(startX, startY);
+				Integer[] xy = pixels.get(pixelCounter);
+				int x = xy[0];
+				int y = xy[1];
+				
+				System.out.print("(" + x + "," + y + ") ");
+				int pixel = image.getRGB(x, y);
 				int green = (pixel >> 8) & 255;
 				double value = Math.abs(green - 255);
 				
@@ -79,10 +70,10 @@ public class ProcessPicture {
 					case 8: BG5.add(value); break;
 					default: System.err.println("ERROR: Reached the default case. That's weird..."); break;
 				}
-				startX += 180; //increment X
+
+				pixelCounter++;
 			}
 			System.out.println();
-			startY += 155; //increment Y
 		}
 	}
 	
