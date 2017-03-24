@@ -23,10 +23,10 @@ public class Kinetics {
 	}
 
 	public static void main(String[] args) {
-
+		
 		// variables to add times and memory
-		long totalTime = 0;
-		long totalMemory = 0;
+//		long totalTime = 0;
+//		long totalMemory = 0;
 		// program timing
 		//		for(int count = 0; count < 100; count++){
 		//			long startTime = System.currentTimeMillis();
@@ -45,14 +45,13 @@ public class Kinetics {
 		} catch (InterruptedException e1) {
 			System.err.println("ERROR: Could not take pictures.");
 		}
-
+		
 		try {
 			tp.readPixelValues();
 			tp.printPixels();
 		} catch (IOException e) {
 			System.err.println("ERROR: Could not read pixel values.");
 		}
-
 		System.out.println("********READING DATA********");
 		System.out.println();
 

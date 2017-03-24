@@ -53,7 +53,7 @@ public class ProcessPicture {
 				int x = xy[0];
 				int y = xy[1];
 				
-				System.out.print("(" + x + "," + y + ") ");
+				//System.out.print("(" + x + "," + y + ") ");
 				int pixel = image.getRGB(x, y);
 				int green = (pixel >> 8) & 255;
 				double value = Math.abs(green - 255);

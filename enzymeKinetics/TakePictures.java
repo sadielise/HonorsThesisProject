@@ -47,9 +47,9 @@ public class TakePictures {
 		for(int row = 0; row < 8; row++){
 			for(int col = 0; col < 9; col++){
 					System.out.print(pixels.get(pixelCounter)[0] + "," + pixels.get(pixelCounter)[1] + " ");
+					pixelCounter++;
 			}
 			System.out.println();
-			pixelCounter++;
 		}
 		
 		System.out.println();
