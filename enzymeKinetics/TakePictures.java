@@ -2,17 +2,24 @@ package enzymeKinetics;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class TakePictures {
 
 	private ArrayList<Integer[]> pixels = new ArrayList<Integer[]>();
+	private String experimentName;
+	
+	public TakePictures(String experimentName){
+		this.experimentName = experimentName;
+	}
 
 	public void takePictures() throws InterruptedException{
 
 		try {
-			Runtime.getRuntime().exec("python /home/pi/take_pictures.py");
-			Thread.sleep(210000);
+			String command = "python /home/pi/Desktop/take_pictures.py" + " " + experimentName;
+			Runtime.getRuntime().exec(command);
+			Thread.sleep(186000);
 		} catch (IOException e) {
 			System.err.println("ERROR: Could not take pictures.");
 		}
@@ -20,7 +27,7 @@ public class TakePictures {
 
 	public void readPixelValues() throws IOException{
 
-		BufferedReader br = new BufferedReader(new FileReader("pixels.txt"));
+		BufferedReader br = new BufferedReader(new FileReader("/home/pi/Desktop/pixels.txt"));
 		String row;
 		while((row = br.readLine()) != null){
 			String[] pixelValues = row.split(" ");
@@ -40,19 +47,20 @@ public class TakePictures {
 		return pixels;
 	}
 	
-	public void printPixels(){
+	public void printPixels(PrintWriter pw){
+		
+		pw.println("Pixel Values");
 		
 		int pixelCounter = 0;
 		
 		for(int row = 0; row < 8; row++){
 			for(int col = 0; col < 9; col++){
-					System.out.print(pixels.get(pixelCounter)[0] + "," + pixels.get(pixelCounter)[1] + " ");
+					pw.print(pixels.get(pixelCounter)[0] + "," + pixels.get(pixelCounter)[1] + " ");
 					pixelCounter++;
 			}
-			System.out.println();
+			pw.println();
 		}
-		
-		System.out.println();
+		pw.println();
 	}
 
 }

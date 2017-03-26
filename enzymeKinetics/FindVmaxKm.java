@@ -1,5 +1,6 @@
 package enzymeKinetics;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 
@@ -44,7 +45,7 @@ public class FindVmaxKm {
 		}
 	}
 
-	protected void FindValues(){
+	protected void FindValues(PrintWriter pw){
 
 		boolean done = false;
 		double deviation = 0;
@@ -71,18 +72,18 @@ public class FindVmaxKm {
 			
 			if(index == 0){
 				deviation = diff;
-				System.out.println("Removing concentration: " + SubstrateConc.get(index));
-				System.out.println("Removing rate: " + ReactionRate.get(index));
-				System.out.println();
+				pw.println("Removing concentration: " + SubstrateConc.get(index));
+				pw.println("Removing rate: " + ReactionRate.get(index));
+				pw.println();
 				index++;
 			}
 			
 			else {
 				if(diff < deviation) {
 					deviation = diff;
-					System.out.println("Removing concentration: " + SubstrateConc.get(index));
-					System.out.println("Removing rate: " + ReactionRate.get(index));
-					System.out.println();
+					pw.println("Removing concentration: " + SubstrateConc.get(index));
+					pw.println("Removing rate: " + ReactionRate.get(index));
+					pw.println();
 					index++;
 				}
 				else {
@@ -92,11 +93,11 @@ public class FindVmaxKm {
 		}
 	}
 
-	protected void PrintVmaxKm(){
+	protected void PrintVmaxKm(PrintWriter pw){
 
-		System.out.println("Vmax: " + Vmax);
-		System.out.println("Km: " + Km);
-		System.out.println();
+		pw.println("Vmax: " + Vmax);
+		pw.println("Km: " + Km);
+		pw.println();
 	}
 
 }

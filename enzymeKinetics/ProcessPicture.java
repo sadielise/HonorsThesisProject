@@ -3,14 +3,16 @@ package enzymeKinetics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
 public class ProcessPicture {
 	
-	BufferedImage image = null;	
-	String filename;
+	protected BufferedImage image = null;	
+	protected String filename;
+	protected int ShiftValue;
 	protected ArrayList<Double> BG1;
 	protected ArrayList<Double> BG2;
 	protected ArrayList<Double> BG3;
@@ -21,8 +23,17 @@ public class ProcessPicture {
 	protected ArrayList<Double> Sample3;
 	protected ArrayList<Double> Calibration;
 	
-	public ProcessPicture(String filename){
-		
+	public ProcessPicture(String filename, String ColorChannel){
+		String channel = ColorChannel;
+		if(channel.equals("red")){
+			this.ShiftValue = 16;
+		}
+		else if(channel.equals("green")){
+			this.ShiftValue = 8;
+		}
+		else if(channel.equals("blue")){
+			this.ShiftValue = 0;
+		}
 		this.filename = filename;
 	}
 	
@@ -55,8 +66,8 @@ public class ProcessPicture {
 				
 				//System.out.print("(" + x + "," + y + ") ");
 				int pixel = image.getRGB(x, y);
-				int green = (pixel >> 8) & 255;
-				double value = Math.abs(green - 255);
+				int colorVal = (pixel >> this.ShiftValue) & 255;
+				double value = Math.abs(colorVal - 255);
 				
 				switch(col){
 					case 0: BG1.add(value); break;
@@ -77,23 +88,23 @@ public class ProcessPicture {
 		}
 	}
 	
-	protected void PrintRawData() {
+	protected void PrintRawData(PrintWriter pw) {
 
-		System.out.println("Raw Data");
+		pw.println("Raw Data");
 
 		for(int row = 0; row < 8; row++){
-				System.out.print(BG1.get(row) + "\t");
-				System.out.print(Sample1.get(row) + "\t");
-				System.out.print(BG2.get(row) + "\t"); 
-				System.out.print(Sample2.get(row) + "\t"); 
-				System.out.print(BG3.get(row) + "\t"); 
-				System.out.print(Sample3.get(row) + "\t"); 
-				System.out.print(BG4.get(row) + "\t"); 
-				System.out.print(Calibration.get(row) + "\t"); 
-				System.out.println(BG5.get(row));
+				pw.print(BG1.get(row) + "\t");
+				pw.print(Sample1.get(row) + "\t");
+				pw.print(BG2.get(row) + "\t"); 
+				pw.print(Sample2.get(row) + "\t"); 
+				pw.print(BG3.get(row) + "\t"); 
+				pw.print(Sample3.get(row) + "\t"); 
+				pw.print(BG4.get(row) + "\t"); 
+				pw.print(Calibration.get(row) + "\t"); 
+				pw.println(BG5.get(row));
 		}
 
-		System.out.println();
+		pw.println();
 	}
 }
 

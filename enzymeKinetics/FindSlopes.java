@@ -1,5 +1,6 @@
 package enzymeKinetics;
 
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
@@ -120,80 +121,42 @@ public class FindSlopes {
 		}
 	}
 
-	protected ArrayList<Double> FindVmaxKm(ArrayList<Double> avgrate, ArrayList<Double> concentrations){
+	protected void PrintRates(PrintWriter pw){
 
-		// initialize array
-		ArrayList<Double> vmaxkm = new ArrayList<Double>();
-
-		// decimal format
-		DecimalFormat df = new DecimalFormat("0.000000");
-
-		// THIS IGNORES THE FIRST 2 ROWS OF DATA
-		SimpleRegression sr = new SimpleRegression();
-		for(int row = 2; row < 8; row++){
-			double tempX = (1/concentrations.get(row));
-			double tempY = (1/avgrate.get(row));
-			sr.addData(tempX, tempY);
-		}
-		double yIntercept = sr.getIntercept();
-		double slope = sr.getSlope();
-		double temp1 = (1/yIntercept);
-		String strTemp1 = df.format(temp1);
-		temp1 = Double.parseDouble(strTemp1);
-		double temp2 = (slope/yIntercept);
-		String strTemp2 = df.format(temp2);
-		temp2 = Double.parseDouble(strTemp2);
-		vmaxkm.add(temp1);
-		vmaxkm.add(temp2);
-		return vmaxkm;
-	}
-
-
-
-	protected void PrintRates(){
-
-		System.out.println("Rate1 Data");
+		pw.println("Rate Data");
 		for(int row = 0; row < 8; row++){
-			System.out.println(Rates1.get(row));
+			pw.println(Rates1.get(row));
 		}
-		System.out.println();
+		pw.println();
 		
-		System.out.println("Rate2 Data");
+		pw.println("Rate Data");
 		for(int row = 0; row < 8; row++){
-			System.out.println(Rates2.get(row));
+			pw.println(Rates2.get(row));
 		}
-		System.out.println();
+		pw.println();
 		
-		System.out.println("Rate3 Data");
+		pw.println("Rate Data");
 		for(int row = 0; row < 8; row++){
-			System.out.println(Rates3.get(row));
+			pw.println(Rates3.get(row));
 		}
-		System.out.println();
+		pw.println();
 	}
 
-	protected void PrintAverageRates() {
+	protected void PrintAverageRates(PrintWriter pw) {
 
-		System.out.println("Average Rate Data");
+		pw.println("Average Rate Data");
 		for (int row = 0; row < 8; row++){
-			System.out.println(AvgRates.get(row));
+			pw.println(AvgRates.get(row));
 		}
-		System.out.println();
+		pw.println();
 	}
 
-	protected void PrintStdDevRates() {
+	protected void PrintStdDevRates(PrintWriter pw) {
 
-		System.out.println("Standard Deviation Rate Data");
+		pw.println("Standard Deviation Rate Data");
 		for (int row = 0; row < 8; row++){
-			System.out.println(RatesStdDev.get(row));
+			pw.println(RatesStdDev.get(row));
 		}
-		System.out.println();
+		pw.println();
 	}
-
-	protected void PrintVmaxKm(ArrayList<Double> VmaxKm){
-
-		System.out.println("Vmax: " + VmaxKm.get(0));
-		System.out.println("Km: " + VmaxKm.get(1));
-		System.out.println();
-	}
-
 }

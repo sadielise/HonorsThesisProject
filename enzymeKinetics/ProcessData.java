@@ -1,5 +1,6 @@
 package enzymeKinetics;
 
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -145,55 +146,51 @@ public class ProcessData {
 		}	
 	}
 
-	protected void PrintAveragedData() {
+	protected void PrintAveragedData(PrintWriter pw) {
 
-		System.out.println("Averaged Data");
+		pw.println("Averaged Data");
 		for(int row = 0; row < 8; row++){
 			for(int col = 0; col < 3; col++){
 				switch(col){
-				case 0: System.out.print(BGAvg1.get(row) + "\t"); break;
-				case 1:	System.out.print(BGAvg2.get(row) + "\t"); break;
-				case 2: System.out.println(BGAvg3.get(row) + "\t"); break;
+				case 0: pw.print(BGAvg1.get(row) + "\t"); break;
+				case 1:	pw.print(BGAvg2.get(row) + "\t"); break;
+				case 2: pw.println(BGAvg3.get(row) + "\t"); break;
 				default: System.err.println("ERROR: Reached the default case. That's weird..."); break;
 				}
 			}
 		}
-
-		System.out.println();
+		pw.println();
 	}
 
-	protected void PrintNormalizedData() {
+	protected void PrintNormalizedData(PrintWriter pw) {
 
-		System.out.println("Normalized Data");
+		pw.println("Normalized Data");
 		for(int row = 0; row < 8; row++){
 			for(int col = 0; col < 3; col++){
 				switch(col){
-				case 0: System.out.print(Norm1.get(row) + "\t"); break;
-				case 1:	System.out.print(Norm2.get(row) + "\t"); break;
-				case 2: System.out.println(Norm3.get(row) + "\t"); break;
+				case 0: pw.print(Norm1.get(row) + "\t"); break;
+				case 1:	pw.print(Norm2.get(row) + "\t"); break;
+				case 2: pw.println(Norm3.get(row) + "\t"); break;
 				default: System.err.println("ERROR: Reached the default case. That's weird..."); break;
 				}
 			}
 		}
-
-		System.out.println();
+		pw.println();
 	}
 
-	protected void PrintConcentrationData() {
+	protected void PrintConcentrationData(PrintWriter pw) {
 
-		System.out.println("Concentration Data");
+		pw.println("Concentration Data");
 		for(int row = 0; row < 8; row++){
 			for(int col = 0; col < 3; col++){
 				switch(col){
-				case 0: System.out.printf("%.6f", ColConcs1.get(row)); System.out.print("\t"); break;
-				case 1: System.out.printf("%.6f", ColConcs2.get(row)); System.out.print("\t"); break;
-				case 2: System.out.printf("%.6f", ColConcs3.get(row)); System.out.println(); break;
+				case 0: pw.printf("%.6f", ColConcs1.get(row)); pw.print("\t"); break;
+				case 1: pw.printf("%.6f", ColConcs2.get(row)); pw.print("\t"); break;
+				case 2: pw.printf("%.6f", ColConcs3.get(row)); pw.println(); break;
 				default: System.err.print("Error: Reached the default case. That's weird...");
 				}
 			}
 		}
-
-		System.out.println();
+		pw.println();
 	}
-
 }

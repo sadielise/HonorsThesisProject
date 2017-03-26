@@ -1,5 +1,6 @@
 package enzymeKinetics;
 
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -86,29 +87,29 @@ public class Calibrate {
 		SlopeIntercept.add(intercept);
 	}
 
-	protected void PrintAveragedData() {
+	protected void PrintAveragedData(PrintWriter pw) {
 
-		System.out.println("Calibration Averaged Data");
+		pw.println("Calibration Averaged Data");
 		for(int row = 0; row < 8; row++){
-			System.out.println(BGAvg4.get(row));
+			pw.println(BGAvg4.get(row));
 		}
-		System.out.println();
+		pw.println();
 	}
 
-	protected void PrintNormalizedData() {
+	protected void PrintNormalizedData(PrintWriter pw) {
 
-		System.out.println("Calibration Normalized Data");
+		pw.println("Calibration Normalized Data");
 		for(int row = 0; row < 8; row++){
-			System.out.println(Norm4.get(row));
+			pw.println(Norm4.get(row));
 		}
-		System.out.println();
+		pw.println();
 	}
 
-	protected void PrintSlopeIntercept() {
+	protected void PrintSlopeIntercept(PrintWriter pw) {
 
-		System.out.println("Calibration Slope: " + SlopeIntercept.get(0));
-		System.out.println("Calibration Intercept: " + SlopeIntercept.get(1));
-		System.out.println();
+		pw.println("Calibration Slope: " + SlopeIntercept.get(0));
+		pw.println("Calibration Intercept: " + SlopeIntercept.get(1));
+		pw.println();
 	}
 
 }
