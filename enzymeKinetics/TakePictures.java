@@ -17,7 +17,7 @@ public class TakePictures {
 	public void takePictures() throws InterruptedException{
 
 		try {
-			String command = "python /home/pi/Desktop/take_pictures.py" + " " + experimentName;
+			String command = "python /home/pi/Honors/HonorsThesisProject/take_pictures.py" + " " + experimentName;
 			Runtime.getRuntime().exec(command);
 			Thread.sleep(186000);
 		} catch (IOException e) {

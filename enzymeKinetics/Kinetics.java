@@ -16,21 +16,17 @@ public class Kinetics {
 
 	static final String USER = "root";
 	static final String PASS = "Pr3point!";
-	
+
 	public static void main(String[] args) {
-		
+
 		// variables to add times and memory
-//		long totalTime = 0;
-//		long totalMemory = 0;
-		// program timing
-		//		for(int count = 0; count < 100; count++){
-		//			long startTime = System.currentTimeMillis();
+		long startTime = System.currentTimeMillis();
 
 		if(args.length != 2){
 			System.err.println("ERROR: Incorrect number of arguments.");
 			System.exit(-1);
 		}
-		
+
 		PrintWriter pw = null;
 		try {
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -41,7 +37,7 @@ public class Kinetics {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		System.out.println("********TAKING PICTURES********");
 		System.out.println();
 
@@ -51,15 +47,15 @@ public class Kinetics {
 		} catch (InterruptedException e1) {
 			System.err.println("ERROR: Could not take pictures.");
 		}
-		
+
 		try {
 			tp.readPixelValues();
 			tp.printPixels(pw);
 		} catch (IOException e) {
 			System.err.println("ERROR: Could not read pixel values.");
 		}
-		
-		
+
+
 		System.out.println("********READING DATA********");
 		System.out.println();
 
@@ -161,19 +157,6 @@ public class Kinetics {
 		fvk.FindValues(pw);
 		fvk.PrintVmaxKm(pw);
 
-		/*long endTime = System.currentTimeMillis();
-		Runtime runtime = Runtime.getRuntime();
-		runtime.gc();
-		totalTime += endTime - startTime;
-		totalMemory += runtime.totalMemory() - runtime.freeMemory();
-				System.out.println((count+1) + ": " + (endTime - startTime) + " milliseconds");
-
-				}
-
-		System.out.println("Avg time: " + (totalTime/100) + " ms");
-		System.out.println("Avg memory: " + (totalMemory/100) + " bytes");
-		 */
-
 		try {
 			Class.forName(JDBC_DRIVER);
 			//System.out.println("Driver registered.");
@@ -205,14 +188,9 @@ public class Kinetics {
 		System.out.println("\nProgram complete.");
 		pw.close();
 
-		//		long endTime = System.currentTimeMillis();
-		//		Runtime runtime = Runtime.getRuntime();
-		//		runtime.gc();
-		//		totalTime += endTime - startTime;
-		//		totalMemory += runtime.totalMemory() - runtime.freeMemory();
-		//		System.out.println((count+1) + ": " + (endTime - startTime) + " milliseconds");
+		long endTime = System.currentTimeMillis();
+		System.out.println("Total time: " + (endTime - startTime));
 
-		//	}
 	}
 }
 
