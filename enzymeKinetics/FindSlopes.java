@@ -48,7 +48,7 @@ public class FindSlopes {
 
 		// get rates for conc1
 		for(int row = 0; row < 8; row++){
-			SimpleRegression sr = new SimpleRegression();
+			SimpleRegression sr = new SimpleRegression(true);
 			sr.addData(1.0, Min1Concs1.get(row));
 			sr.addData(2.0, Min2Concs1.get(row));
 			sr.addData(3.0, Min3Concs1.get(row));
@@ -60,7 +60,7 @@ public class FindSlopes {
 
 		// get rates for conc2
 		for(int row = 0; row < 8; row++){
-			SimpleRegression sr = new SimpleRegression();
+			SimpleRegression sr = new SimpleRegression(true);
 			sr.addData(1.0, Min1Concs2.get(row));
 			sr.addData(2.0, Min2Concs2.get(row));
 			sr.addData(3.0, Min3Concs2.get(row));
@@ -72,7 +72,7 @@ public class FindSlopes {
 
 		// get rates for conc3
 		for(int row = 0; row < 8; row++){
-			SimpleRegression sr = new SimpleRegression();
+			SimpleRegression sr = new SimpleRegression(true);
 			sr.addData(1.0, Min1Concs3.get(row));
 			sr.addData(2.0, Min2Concs3.get(row));
 			sr.addData(3.0, Min3Concs3.get(row));

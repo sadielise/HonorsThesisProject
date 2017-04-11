@@ -70,7 +70,7 @@ public class Calibrate {
 		DecimalFormat dfIntercept = new DecimalFormat("0.0000");
 
 
-		SimpleRegression sr = new SimpleRegression();
+		SimpleRegression sr = new SimpleRegression(true);
 
 		for(int row = 0; row < 8; row++){
 			sr.addData(SampleConcs.get(row), Norm4.get(row));

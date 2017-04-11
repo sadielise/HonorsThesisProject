@@ -78,13 +78,13 @@ public class ReadConfigurationData {
 	protected void PrintConfigurationData(PrintWriter pw){
 		
 		pw.println("Substrate Concentrations");
-		for(int row = 0; row < 8; row ++){
+		for(int row = 0; row < SubstrateConcs.size(); row ++){
 			pw.println(SubstrateConcs.get(row));
 		}
 		pw.println();
 		
 		pw.println("Calibration Concentrations");
-		for(int row = 0; row < 8; row ++){
+		for(int row = 0; row < CalibrationConcs.size(); row ++){
 			pw.println(CalibrationConcs.get(row));
 		}
 		pw.println();

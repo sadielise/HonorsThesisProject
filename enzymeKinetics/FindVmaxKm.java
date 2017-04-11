@@ -28,7 +28,7 @@ public class FindVmaxKm {
 	}
 	
 	protected void LineweaverBurk(int index){
-		LB = new SimpleRegression();
+		LB = new SimpleRegression(true);
 		for(int i = index; i < SubstrateConc.size()-index; i++){
 			double x = 1.0/SubstrateConc.get(i);
 			double y = 1.0/ReactionRate.get(i);
@@ -38,7 +38,7 @@ public class FindVmaxKm {
 	
 	protected void MichaelisMenten(int index, double tempVmax, double tempKm){
 		
-		MM = new SimpleRegression();
+		MM = new SimpleRegression(true);
 		for(int i = index; i < SubstrateConc.size()-index; i++){
 			Double temp = (tempVmax * SubstrateConc.get(i))/(tempKm + SubstrateConc.get(i));
 			MM.addData(SubstrateConc.get(i), temp);
