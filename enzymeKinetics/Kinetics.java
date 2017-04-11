@@ -29,7 +29,7 @@ public class Kinetics {
 
 		PrintWriter pw = null;
 		try {
-			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
 			Date date = new Date();
 			String outputFile = "/home/pi/Desktop/" + args[1] + " " + df.format(date) + ".txt"; 
 			File outFile = new File(outputFile);
