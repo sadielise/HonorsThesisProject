@@ -7,7 +7,7 @@ import sys
 camera = PiCamera()
 
 # allow the camera to warmup
-time.sleep(5)
+time.sleep(3)
 
 # take min1 picture
 experimentName = sys.argv[1]

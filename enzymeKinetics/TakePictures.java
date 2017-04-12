@@ -19,7 +19,7 @@ public class TakePictures {
 		try {
 			String command = "python /home/pi/Honors/HonorsThesisProject/take_pictures.py" + " " + experimentName;
 			Runtime.getRuntime().exec(command);
-			Thread.sleep(186000);
+			Thread.sleep(125000);
 		} catch (IOException e) {
 			System.err.println("ERROR: Could not take pictures.");
 		}

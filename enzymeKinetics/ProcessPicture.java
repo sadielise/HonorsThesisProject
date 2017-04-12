@@ -84,7 +84,6 @@ public class ProcessPicture {
 
 				pixelCounter++;
 			}
-			System.out.println();
 		}
 	}
 	

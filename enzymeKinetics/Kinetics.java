@@ -20,7 +20,7 @@ public class Kinetics {
 	public static void main(String[] args) {
 
 		// variables to add times and memory
-		long startTime = System.currentTimeMillis();
+//		long startTime = System.currentTimeMillis();
 
 		if(args.length != 2){
 			System.err.println("ERROR: Incorrect number of arguments.");
@@ -58,6 +58,8 @@ public class Kinetics {
 
 		System.out.println("********READING DATA********");
 		System.out.println();
+		
+//		long startTimeReadingData = System.currentTimeMillis();
 
 		// read concentrations
 		ReadConfigurationData rd = new ReadConfigurationData(args[0]);
@@ -81,9 +83,13 @@ public class Kinetics {
 		ProcessPicture process3 = new ProcessPicture(picture3, rd.ColorChannel);
 		process3.ExtractPixels(tp.getPixels());
 		process3.PrintRawData(pw);
+		
+//		long endTimeReadingData = System.currentTimeMillis();
+//		System.out.println("Total time: " + (endTimeReadingData - startTimeReadingData));
 
 		System.out.println("********GETTING CALIBRATION DATA********");
 		System.out.println();
+//		long startTimeCalibration = System.currentTimeMillis();
 
 		// find min1 calibration equation
 		Calibrate cb1 = new Calibrate(process1.BG4, process1.BG5, process1.Calibration, rd.CalibrationConcs);
@@ -111,9 +117,15 @@ public class Kinetics {
 		cb3.PrintNormalizedData(pw);
 		cb3.FindSlopeIntercept();
 		cb3.PrintSlopeIntercept(pw);
+		
+//		long endTimeCalibration = System.currentTimeMillis();
+//		System.out.println("Total time: " + (endTimeCalibration - startTimeCalibration));
+
 
 		System.out.println("********PROCESSING DATA********");
 		System.out.println();
+		
+//		long startTimeProcessingData = System.currentTimeMillis();
 
 		// process min1 data
 		ProcessData min1 = new ProcessData(process1.BG1, process1.Sample1, process1.BG2, process1.Sample2, process1.BG3, process1.Sample3, process1.BG4, cb1.SlopeIntercept);
@@ -142,9 +154,14 @@ public class Kinetics {
 		min3.FindConcentrations();
 		min3.PrintConcentrationData(pw);
 
+//		long endTimeProcessingData = System.currentTimeMillis();
+//		System.out.println("Total time: " + (endTimeProcessingData - startTimeProcessingData));
+		
 		System.out.println("********COMBINING DATA********");
 		System.out.println();
-
+		
+//		long startTimeCombiningData = System.currentTimeMillis();
+		
 		FindSlopes fs = new FindSlopes(min1.ColConcs1, min1.ColConcs2, min1.ColConcs3, min2.ColConcs1, min2.ColConcs2, min2.ColConcs3, min3.ColConcs1, min3.ColConcs2, min3.ColConcs3);
 		fs.FindRates();
 		fs.PrintRates(pw);
@@ -157,9 +174,11 @@ public class Kinetics {
 		fvk.FindValues(pw);
 		fvk.PrintVmaxKm(pw);
 
+//		long endTimeCombiningData = System.currentTimeMillis();
+//		System.out.println("Total time: " + (endTimeCombiningData - startTimeCombiningData));
+
 		try {
 			Class.forName(JDBC_DRIVER);
-			//System.out.println("Driver registered.");
 		} catch (ClassNotFoundException e) {
 			System.out.println("Error: MySQL Driver not found.");
 			System.exit(-1);
@@ -168,28 +187,24 @@ public class Kinetics {
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
-			System.out.println("Connected to MySQL database.");
 			Statement stmt = conn.createStatement();
 			String timestamp = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss").format(new java.util.Date());
 			String insert = "INSERT INTO results VALUES (" + fvk.getVmax() + ", " + fvk.getKm() + ", '" + timestamp + "')";
 			stmt.executeUpdate(insert);
-			System.out.println("Values and timestamp inserted into database.");
 		} catch (SQLException e){
-			System.out.println("Error: Could not connect to MySQL database.");
+			System.err.println("Error: Could not connect to MySQL database.");
 			System.exit(-1);
 		}
 
-		if(conn != null){
-			//System.out.println("Connection established!");
-		} else {
-			System.out.println("Error: Connection failed.");
+		if(conn == null){
+			System.err.println("Error: Connection failed.");
 		}
 
 		System.out.println("\nProgram complete.");
 		pw.close();
 
-		long endTime = System.currentTimeMillis();
-		System.out.println("Total time: " + (endTime - startTime));
+//		long endTime = System.currentTimeMillis();
+//		System.out.println("Total time: " + (endTime - startTime));
 
 	}
 }
